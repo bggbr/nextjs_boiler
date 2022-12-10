@@ -1,6 +1,7 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import Image from "next/image";
+
+import Link from "next/link";
 import { getSortedPostsData } from "../lib/post";
 import homeStyles from "../styles/Home.module.css";
 
@@ -27,9 +28,11 @@ export default function Home({
                 <ul className={homeStyles.list}>
                     {allPostsData.map(({ id, title, date }) => (
                         <li className={homeStyles.listItem} key={id}>
-                            <a>{title}</a>
-                            <br />
-                            <small className={homeStyles.lightText}>{date}</small>
+                            <Link href={`/posts/${id}`}>
+                                <a>{title}</a>
+                                <br />
+                                <small className={homeStyles.lightText}>{date}</small>
+                            </Link>
                         </li>
                     ))}
                 </ul>
@@ -40,7 +43,6 @@ export default function Home({
 
 export const getStaticProps: GetStaticProps = async () => {
     const allPostsData = getSortedPostsData();
-    console.log(allPostsData);
 
     return {
         props: {
